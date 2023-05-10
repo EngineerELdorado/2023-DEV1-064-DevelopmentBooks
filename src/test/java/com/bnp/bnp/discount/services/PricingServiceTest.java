@@ -150,4 +150,18 @@ class PricingServiceTest {
         //Then
         assertThat(result).isEqualTo(185);
     }
+
+    @Test
+    void test_final_example() {
+        //Given
+        int[] shoppingBasket = {1, 1, 2, 2, 3, 3, 4, 5};
+        given(bookRepository.getBooks()).willReturn(TestData.getBooks());
+        given(bookRepository.getDiscountsRates()).willReturn(TestData.getDiscountsRates());
+
+        //When
+        double result = pricingService.calculatePrice(shoppingBasket);
+
+        //Then
+        assertThat(result).isEqualTo(320);
+    }
 }
