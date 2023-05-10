@@ -5,6 +5,7 @@ import com.bnp.bnp.basket.exceptions.InvalidBasketException;
 import com.bnp.bnp.basket.exceptions.NoBasketException;
 import com.bnp.bnp.books.repositories.BookRepository;
 import com.bnp.bnp.models.TestData;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -92,5 +93,17 @@ class DiscountServiceTest {
 
         //Then
         assertThat(finalPrice).isEqualTo(95);
+    }
+
+    @Test
+    void given_three_distinct_books_in_the_shopping_basket_then_apply_discount_of_10_percent() {
+        //Given
+        int[] booksIds = {1, 2, 5};
+
+        //When
+        double result = discountService.calculatePrice(booksIds);
+
+        //Then
+        assertThat(result).isEqualTo(135);
     }
 }
