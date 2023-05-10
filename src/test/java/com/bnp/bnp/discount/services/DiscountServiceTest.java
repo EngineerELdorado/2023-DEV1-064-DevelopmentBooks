@@ -47,4 +47,16 @@ class DiscountServiceTest {
         //Then
         assertThat(finalPrice).isEqualTo(50);
     }
+
+    @Test
+    void given_only_similar_books_in_the_shopping_basket_when_calculating_the_price_then_apply_no_discount() {
+        //Given
+        int[] shoppingBasket = {1, 1, 1, 1, 1};
+
+        //When
+        double finalPrice = discountService.calculatePrice(shoppingBasket);
+
+        //Then
+        assertThat(finalPrice).isEqualTo(500);
+    }
 }
