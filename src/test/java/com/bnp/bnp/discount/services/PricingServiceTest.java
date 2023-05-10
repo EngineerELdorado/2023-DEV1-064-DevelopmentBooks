@@ -122,4 +122,18 @@ class PricingServiceTest {
         //Then
         assertThat(result).isEqualTo(160);
     }
+
+    @Test
+    void given_five_distinct_books_in_the_shopping_basket_then_apply_discount_of_25_percent() {
+        //Given
+        int[] booksIds = {1, 2, 3, 4, 5};
+        given(bookRepository.getBooks()).willReturn(TestData.getBooks());
+        given(bookRepository.getDiscountsRates()).willReturn(TestData.getDiscountsRates());
+
+        //When
+        double result = pricingService.calculatePrice(booksIds);
+
+        //Then
+        assertThat(result).isEqualTo(187.5);
+    }
 }
