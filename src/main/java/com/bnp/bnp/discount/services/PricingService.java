@@ -42,6 +42,7 @@ public class PricingService {
 
         //As long as we have more than one distinct book we need to apply discount again for them
         while (numberOfDistinctBooks > 1) {
+            double discountPercentage = discountPercentages.getOrDefault(numberOfDistinctBooks, 0.0);
             int minCountThatQualifiesForDiscount = Integer.MAX_VALUE;
 
             /*
@@ -57,7 +58,6 @@ public class PricingService {
                     minCountThatQualifiesForDiscount = count;
                 }
             }
-            double discountPercentage = discountPercentages.getOrDefault(numberOfDistinctBooks, 0.0);
 
             discountAmountForDistinctBooks = discountAmountForDistinctBooks +
                     (numberOfDistinctBooks * minCountThatQualifiesForDiscount *
