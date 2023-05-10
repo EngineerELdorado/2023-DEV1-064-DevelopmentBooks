@@ -1,5 +1,6 @@
 package com.bnp.bnp.discount.services;
 
+import com.bnp.bnp.basket.exceptions.EmptyBasketException;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
