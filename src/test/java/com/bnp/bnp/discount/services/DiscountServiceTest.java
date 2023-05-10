@@ -4,6 +4,7 @@ import com.bnp.bnp.basket.exceptions.EmptyBasketException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DiscountServiceTest {
@@ -32,5 +33,17 @@ class DiscountServiceTest {
         assertThatThrownBy(() -> discountService.calculatePrice(null))
                 .isInstanceOf(EmptyBasketException.class)
                 .hasMessage("The basket is empty");
+    }
+
+    @Test
+    void given_only_one_book_in_the_shopping_basket_when_calculating_the_price_then_apply_no_discount() {
+        //Given
+        int[] shoppingBasket = {1};
+
+        //When
+        double finalPrice = discountService.calculatePrice(shoppingBasket);
+
+        //Then
+        assertThat(finalPrice).isEqualTo(50);
     }
 }
