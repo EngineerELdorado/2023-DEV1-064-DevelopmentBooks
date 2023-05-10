@@ -1,6 +1,7 @@
 package com.bnp.bnp.discount.services;
 
 import com.bnp.bnp.basket.exceptions.EmptyBasketException;
+import com.bnp.bnp.basket.exceptions.NoBasketException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,8 +32,8 @@ class DiscountServiceTest {
     void given_null_shopping_basket_when_calculating_the_price_then_throw_an_exception() {
         //Given //When //Then
         assertThatThrownBy(() -> discountService.calculatePrice(null))
-                .isInstanceOf(EmptyBasketException.class)
-                .hasMessage("The basket is empty");
+                .isInstanceOf(NoBasketException.class)
+                .hasMessage("No basket found");
     }
 
     @Test
