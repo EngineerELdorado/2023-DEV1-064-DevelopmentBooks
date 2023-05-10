@@ -16,41 +16,39 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class PricingService {
 
-    //this is not field injection. Lombok(@RequiredArgsConstructor) will generate a constructor for this
+    //this is not field injection. Lombok(@RequiredArgsConstructor) will generate a constructor injection for this
     private final BookRepository bookRepository;
     private static final double PRICE_PER_BOOK = 50;
 
     public double calculatePrice(@Nullable int[] shoppingBasket) {
         validateShoppingBasket(shoppingBasket);
 
-        double totalCost = PRICE_PER_BOOK * shoppingBasket.length;
+        double price = PRICE_PER_BOOK * shoppingBasket.length;
 
         Map<Integer, Double> discountPercentages = bookRepository.getDiscountsRates();
         if (shoppingBasket.length == 1) {
-            return totalCost;
+            return price;
         }
 
         Set<Integer> distinctBooks = BookUtil.getDistinctBooks(shoppingBasket);
         int numberOfDistinctBooks = distinctBooks.size();
 
         if (numberOfDistinctBooks == 1) {
-            return totalCost;
+            return price;
         }
 
         Map<Integer, Integer> bookCounts = BookUtil.getBookCounts(shoppingBasket);
-
-        double discountForDistinctBooks = 0;
+        double discountAmountForDistinctBooks = 0;
 
         //As long as we have more than one distinct book we need to apply discount again for them
         while (numberOfDistinctBooks > 1) {
-
             int minCountThatQualifiesForDiscount = Integer.MAX_VALUE;
 
             /*
              * LOGIC EXPLANATION:
              * 1. For each distinct book from the map we get its value (its count)
-             * 2. Check if the count is greater than 0. Meaning if there is a copy remaining on the basket for this book.
-             * 3. We see if this count is less than what was saved previously as the min count that qualifies for discount.
+             * 2. Check if the count is greater than 0(if there is still the same book in the basket).
+             * 3. We see if this count is less than what was saved previously.
              * 4. If Yes then we update the min count that qualifies for discount.
              * 5. We return the min count that qualifies for discount.
              */
@@ -61,9 +59,9 @@ public class PricingService {
             }
             double discountPercentage = discountPercentages.getOrDefault(numberOfDistinctBooks, 0.0);
 
-            discountForDistinctBooks = discountForDistinctBooks +
-                    (numberOfDistinctBooks * minCountThatQualifiesForDiscount * PRICE_PER_BOOK * discountPercentage);
-
+            discountAmountForDistinctBooks = discountAmountForDistinctBooks +
+                    (numberOfDistinctBooks * minCountThatQualifiesForDiscount *
+                            PRICE_PER_BOOK * discountPercentage);
             /*
             Check if the book counts still have values that are greater than the current min count
             If yes then reduce the count (because we will process the discount for it too).
@@ -79,7 +77,7 @@ public class PricingService {
             bookCounts.values().removeIf(count -> count == 0);
             numberOfDistinctBooks = bookCounts.keySet().size();
         }
-        return totalCost - discountForDistinctBooks;
+        return price - discountAmountForDistinctBooks;
     }
 
     private void validateShoppingBasket(int[] shoppingBasket) {
