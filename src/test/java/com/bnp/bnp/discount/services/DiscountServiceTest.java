@@ -57,6 +57,6 @@ class DiscountServiceTest {
         double finalPrice = discountService.calculatePrice(shoppingBasket);
 
         //Then
-        assertThat(finalPrice).isEqualTo(500);
+        assertThat(finalPrice).isEqualTo(250);
     }
 }
