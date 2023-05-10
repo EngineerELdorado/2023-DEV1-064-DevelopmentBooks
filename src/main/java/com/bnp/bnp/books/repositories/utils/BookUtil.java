@@ -7,6 +7,10 @@ import java.util.Set;
 
 public class BookUtil {
 
+    private BookUtil() {
+
+    }
+
     public static Map<Integer, Integer> getBookCounts(int[] shoppingBasket) {
         Map<Integer, Integer> bookCounts = new HashMap<>();
         for (int book : shoppingBasket) {
