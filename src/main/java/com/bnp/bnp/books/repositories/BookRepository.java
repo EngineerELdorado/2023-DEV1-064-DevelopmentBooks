@@ -1,9 +1,12 @@
 package com.bnp.bnp.books.repositories;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.HashMap;
 import java.util.Map;
 
 //This class plays the role of a persistence unit (like a DB)
+@Repository
 public class BookRepository {
 
     public Map<Integer, String> getBooks() {

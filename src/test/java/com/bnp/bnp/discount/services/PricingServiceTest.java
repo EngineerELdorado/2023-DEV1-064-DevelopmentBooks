@@ -5,7 +5,6 @@ import com.bnp.bnp.basket.exceptions.InvalidBasketException;
 import com.bnp.bnp.basket.exceptions.NoBasketException;
 import com.bnp.bnp.books.repositories.BookRepository;
 import com.bnp.bnp.models.TestData;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -152,7 +151,7 @@ class PricingServiceTest {
     }
 
     @Test
-    void test_final_example() {
+    void given_final_example_from_the_assignment_apply_appropriate_discount() {
         //Given
         int[] shoppingBasket = {1, 1, 2, 2, 3, 3, 4, 5};
         given(bookRepository.getBooks()).willReturn(TestData.getBooks());
