@@ -79,4 +79,17 @@ class DiscountServiceTest {
                 .isInstanceOf(InvalidBasketException.class)
                 .hasMessage("Your basket contains invalid books");
     }
+
+    @Test
+    void given_two_distinct_books_in_the_shopping_basket_then_apply_discount_of_10_percent() {
+        //Given
+        int[] shoppingBasket = {1, 2};
+        given(bookRepository.getBooks()).willReturn(TestData.getBooks());
+
+        //When
+        double finalPrice = discountService.calculatePrice(shoppingBasket);
+
+        //Then
+        assertThat(finalPrice).isEqualTo(95);
+    }
 }
