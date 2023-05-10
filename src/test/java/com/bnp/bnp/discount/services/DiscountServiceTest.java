@@ -19,4 +19,14 @@ class DiscountServiceTest {
                 .isInstanceOf(EmptyBasketException.class)
                 .hasMessage("The basket is empty");
     }
+
+    @Test
+    void given_null_shopping_basket_when_calculating_the_price_then_throw_an_exception() {
+        DiscountService discountService = new DiscountService();
+
+        //Given //When //Then
+        assertThatThrownBy(() -> discountService.calculatePrice(null))
+                .isInstanceOf(EmptyBasketException.class)
+                .hasMessage("The basket is empty");
+    }
 }
