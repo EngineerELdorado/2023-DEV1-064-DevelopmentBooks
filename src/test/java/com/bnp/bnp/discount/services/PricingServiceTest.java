@@ -5,7 +5,6 @@ import com.bnp.bnp.basket.exceptions.InvalidBasketException;
 import com.bnp.bnp.basket.exceptions.NoBasketException;
 import com.bnp.bnp.books.repositories.BookRepository;
 import com.bnp.bnp.models.TestData;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,12 +16,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-class DiscountServiceTest {
+class PricingServiceTest {
 
     @Mock
     private BookRepository bookRepository;
     @InjectMocks
-    private DiscountService discountService;
+    private PricingService pricingService;
 
     @Test
     void given_empty_shopping_basket_when_calculating_the_price_then_throw_an_exception() {
@@ -30,7 +29,7 @@ class DiscountServiceTest {
         int[] shoppingBasket = {};
 
         //When //Then
-        assertThatThrownBy(() -> discountService.calculatePrice(shoppingBasket))
+        assertThatThrownBy(() -> pricingService.calculatePrice(shoppingBasket))
                 .isInstanceOf(EmptyBasketException.class)
                 .hasMessage("The basket is empty");
     }
@@ -38,7 +37,7 @@ class DiscountServiceTest {
     @Test
     void given_null_shopping_basket_when_calculating_the_price_then_throw_an_exception() {
         //Given //When //Then
-        assertThatThrownBy(() -> discountService.calculatePrice(null))
+        assertThatThrownBy(() -> pricingService.calculatePrice(null))
                 .isInstanceOf(NoBasketException.class)
                 .hasMessage("No basket found");
     }
@@ -50,7 +49,7 @@ class DiscountServiceTest {
         given(bookRepository.getBooks()).willReturn(TestData.getBooks());
 
         //When
-        double finalPrice = discountService.calculatePrice(shoppingBasket);
+        double finalPrice = pricingService.calculatePrice(shoppingBasket);
 
         //Then
         assertThat(finalPrice).isEqualTo(50);
@@ -63,7 +62,7 @@ class DiscountServiceTest {
         given(bookRepository.getBooks()).willReturn(TestData.getBooks());
 
         //When
-        double finalPrice = discountService.calculatePrice(shoppingBasket);
+        double finalPrice = pricingService.calculatePrice(shoppingBasket);
 
         //Then
         assertThat(finalPrice).isEqualTo(250);
@@ -76,20 +75,20 @@ class DiscountServiceTest {
         given(bookRepository.getBooks()).willReturn(TestData.getBooks());
 
         //When //Then
-        assertThatThrownBy(() -> discountService.calculatePrice(shoppingBasket))
+        assertThatThrownBy(() -> pricingService.calculatePrice(shoppingBasket))
                 .isInstanceOf(InvalidBasketException.class)
                 .hasMessage("Your basket contains invalid books");
     }
 
     @Test
-    void given_two_distinct_books_in_the_shopping_basket_then_apply_discount_of_10_percent() {
+    void given_two_distinct_books_in_the_shopping_basket_then_apply_discount_of_5_percent() {
         //Given
         int[] shoppingBasket = {1, 2};
         given(bookRepository.getBooks()).willReturn(TestData.getBooks());
         given(bookRepository.getDiscountsRates()).willReturn(TestData.getDiscountsRates());
 
         //When
-        double finalPrice = discountService.calculatePrice(shoppingBasket);
+        double finalPrice = pricingService.calculatePrice(shoppingBasket);
 
         //Then
         assertThat(finalPrice).isEqualTo(95);
@@ -99,9 +98,11 @@ class DiscountServiceTest {
     void given_three_distinct_books_in_the_shopping_basket_then_apply_discount_of_10_percent() {
         //Given
         int[] booksIds = {1, 2, 5};
+        given(bookRepository.getBooks()).willReturn(TestData.getBooks());
+        given(bookRepository.getDiscountsRates()).willReturn(TestData.getDiscountsRates());
 
         //When
-        double result = discountService.calculatePrice(booksIds);
+        double result = pricingService.calculatePrice(booksIds);
 
         //Then
         assertThat(result).isEqualTo(135);

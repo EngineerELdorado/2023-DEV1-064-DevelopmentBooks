@@ -4,18 +4,17 @@ import com.bnp.bnp.basket.exceptions.EmptyBasketException;
 import com.bnp.bnp.basket.exceptions.InvalidBasketException;
 import com.bnp.bnp.basket.exceptions.NoBasketException;
 import com.bnp.bnp.books.repositories.BookRepository;
+import com.bnp.bnp.books.repositories.utils.BookUtil;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class DiscountService {
+public class PricingService {
 
     //this is not field injection. Lombok(@RequiredArgsConstructor) will generate a constructor for this
     private final BookRepository bookRepository;
@@ -31,14 +30,14 @@ public class DiscountService {
             return totalCost;
         }
 
-        Set<Integer> distinctBooks = getDistinctBooks(shoppingBasket);
+        Set<Integer> distinctBooks = BookUtil.getDistinctBooks(shoppingBasket);
         int numberOfDistinctBooks = distinctBooks.size();
 
         if (numberOfDistinctBooks == 1) {
             return totalCost;
         }
 
-        Map<Integer, Integer> bookCounts = getBookCounts(shoppingBasket);
+        Map<Integer, Integer> bookCounts = BookUtil.getBookCounts(shoppingBasket);
 
         double discountForDistinctBooks = 0;
 
@@ -81,22 +80,6 @@ public class DiscountService {
             numberOfDistinctBooks = bookCounts.keySet().size();
         }
         return totalCost - discountForDistinctBooks;
-    }
-
-    private static Map<Integer, Integer> getBookCounts(int[] shoppingBasket) {
-        Map<Integer, Integer> bookCounts = new HashMap<>();
-        for (int book : shoppingBasket) {
-            bookCounts.put(book, bookCounts.getOrDefault(book, 0) + 1);
-        }
-        return bookCounts;
-    }
-
-    private static Set<Integer> getDistinctBooks(int[] shoppingBasket) {
-        Set<Integer> distinctBooks = new HashSet<>();
-        for (int book : shoppingBasket) {
-            distinctBooks.add(book);
-        }
-        return distinctBooks;
     }
 
     private void validateShoppingBasket(int[] shoppingBasket) {
