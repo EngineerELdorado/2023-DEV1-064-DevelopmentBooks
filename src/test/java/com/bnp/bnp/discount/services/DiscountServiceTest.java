@@ -1,7 +1,9 @@
 package com.bnp.bnp.discount.services;
 
 import com.bnp.bnp.basket.exceptions.EmptyBasketException;
+import com.bnp.bnp.basket.exceptions.InvalidBasketException;
 import com.bnp.bnp.basket.exceptions.NoBasketException;
+import com.bnp.bnp.books.repositories.BookRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,11 +12,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DiscountServiceTest {
 
+    BookRepository bookRepository;
     DiscountService discountService;
 
     @BeforeEach
     void setUp() {
-        discountService = new DiscountService();
+        bookRepository = new BookRepository();
+        discountService = new DiscountService(bookRepository);
     }
 
     @Test
