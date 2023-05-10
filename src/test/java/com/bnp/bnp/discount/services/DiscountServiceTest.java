@@ -59,4 +59,16 @@ class DiscountServiceTest {
         //Then
         assertThat(finalPrice).isEqualTo(250);
     }
+
+    @Test
+    void given_unknown_books_in_the_shopping_basket_then_throw_exception() {
+
+        //Given
+        int[] shoppingBasket = {999};
+
+        //When //Then
+        assertThatThrownBy(() -> discountService.calculatePrice(shoppingBasket))
+                .isInstanceOf(InvalidBasketException.class)
+                .hasMessage("Your basket contains invalid books");
+    }
 }
