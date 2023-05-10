@@ -14,4 +14,13 @@ public class TestData {
         books.put(5, "Working Effectively With Legacy Code (Michael C. Feathers, 2004)");
         return books;
     }
+
+    public static Map<Integer, Double> getDiscountsRates() {
+        Map<Integer, Double> discountPercentagesMap = new HashMap<>();
+        discountPercentagesMap.put(2, 0.05);
+        discountPercentagesMap.put(3, 0.1);
+        discountPercentagesMap.put(4, 0.2);
+        discountPercentagesMap.put(5, 0.25);
+        return discountPercentagesMap;
+    }
 }

@@ -85,6 +85,7 @@ class DiscountServiceTest {
         //Given
         int[] shoppingBasket = {1, 2};
         given(bookRepository.getBooks()).willReturn(TestData.getBooks());
+        given(bookRepository.getDiscountsRates()).willReturn(TestData.getDiscountsRates());
 
         //When
         double finalPrice = discountService.calculatePrice(shoppingBasket);

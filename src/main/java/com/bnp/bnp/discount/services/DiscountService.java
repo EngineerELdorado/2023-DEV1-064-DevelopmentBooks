@@ -38,7 +38,7 @@ public class DiscountService {
             return totalCost;
         }
 
-        Map<Integer, Integer> bookCounts = getBooks(shoppingBasket);
+        Map<Integer, Integer> bookCounts = getBookCounts(shoppingBasket);
 
         double discountForDistinctBooks = 0;
 
@@ -83,7 +83,7 @@ public class DiscountService {
         return totalCost - discountForDistinctBooks;
     }
 
-    private static Map<Integer, Integer> getBooks(int[] shoppingBasket) {
+    private static Map<Integer, Integer> getBookCounts(int[] shoppingBasket) {
         Map<Integer, Integer> bookCounts = new HashMap<>();
         for (int book : shoppingBasket) {
             bookCounts.put(book, bookCounts.getOrDefault(book, 0) + 1);
