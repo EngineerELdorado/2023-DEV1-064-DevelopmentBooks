@@ -5,6 +5,7 @@ import com.bnp.bnp.basket.exceptions.InvalidBasketException;
 import com.bnp.bnp.basket.exceptions.NoBasketException;
 import com.bnp.bnp.books.repositories.BookRepository;
 import com.bnp.bnp.models.TestData;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -106,5 +107,19 @@ class PricingServiceTest {
 
         //Then
         assertThat(result).isEqualTo(135);
+    }
+
+    @Test
+    void given_four_distinct_books_in_the_shopping_basket_then_apply_discount_of_20_percent() {
+        //Given
+        int[] booksIds = {1, 2, 4, 5};
+        given(bookRepository.getBooks()).willReturn(TestData.getBooks());
+        given(bookRepository.getDiscountsRates()).willReturn(TestData.getDiscountsRates());
+
+        //When
+        double result = pricingService.calculatePrice(booksIds);
+
+        //Then
+        assertThat(result).isEqualTo(160);
     }
 }
