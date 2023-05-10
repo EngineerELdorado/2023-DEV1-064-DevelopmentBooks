@@ -4,22 +4,24 @@ import com.bnp.bnp.basket.exceptions.EmptyBasketException;
 import com.bnp.bnp.basket.exceptions.InvalidBasketException;
 import com.bnp.bnp.basket.exceptions.NoBasketException;
 import com.bnp.bnp.books.repositories.BookRepository;
-import org.junit.jupiter.api.BeforeEach;
+import com.bnp.bnp.models.TestData;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.BDDMockito.given;
 
+@ExtendWith(MockitoExtension.class)
 class DiscountServiceTest {
 
-    BookRepository bookRepository;
-    DiscountService discountService;
-
-    @BeforeEach
-    void setUp() {
-        bookRepository = new BookRepository();
-        discountService = new DiscountService(bookRepository);
-    }
+    @Mock
+    private BookRepository bookRepository;
+    @InjectMocks
+    private DiscountService discountService;
 
     @Test
     void given_empty_shopping_basket_when_calculating_the_price_then_throw_an_exception() {
@@ -44,6 +46,7 @@ class DiscountServiceTest {
     void given_only_one_book_in_the_shopping_basket_when_calculating_the_price_then_apply_no_discount() {
         //Given
         int[] shoppingBasket = {1};
+        given(bookRepository.getBooks()).willReturn(TestData.getBooks());
 
         //When
         double finalPrice = discountService.calculatePrice(shoppingBasket);
@@ -56,6 +59,7 @@ class DiscountServiceTest {
     void given_only_similar_books_in_the_shopping_basket_when_calculating_the_price_then_apply_no_discount() {
         //Given
         int[] shoppingBasket = {1, 1, 1, 1, 1};
+        given(bookRepository.getBooks()).willReturn(TestData.getBooks());
 
         //When
         double finalPrice = discountService.calculatePrice(shoppingBasket);
@@ -66,9 +70,9 @@ class DiscountServiceTest {
 
     @Test
     void given_unknown_books_in_the_shopping_basket_then_throw_exception() {
-
         //Given
         int[] shoppingBasket = {999};
+        given(bookRepository.getBooks()).willReturn(TestData.getBooks());
 
         //When //Then
         assertThatThrownBy(() -> discountService.calculatePrice(shoppingBasket))

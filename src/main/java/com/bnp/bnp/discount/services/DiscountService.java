@@ -21,13 +21,6 @@ public class DiscountService {
     private static final double PRICE_PER_BOOK = 50;
 
     public double calculatePrice(@Nullable int[] shoppingBasket) {
-        Map<Integer, String> books = bookRepository.getBooks();
-
-        for (int id : shoppingBasket) {
-            if (!books.containsKey(id)) {
-                throw new InvalidBasketException("Your basket contains invalid books");
-            }
-        }
         validateShoppingBasket(shoppingBasket);
 
         if (shoppingBasket.length == 1) {
@@ -42,15 +35,22 @@ public class DiscountService {
         if (distinctBooks.size() == 1) {
             return PRICE_PER_BOOK * shoppingBasket.length;
         }
-
-
         return 0;
     }
 
-    private static void validateShoppingBasket(int[] shoppingBasket) {
+    private void validateShoppingBasket(int[] shoppingBasket) {
         if (shoppingBasket == null) {
             throw new NoBasketException("No basket found");
         }
+
+        Map<Integer, String> books = bookRepository.getBooks();
+
+        for (int id : shoppingBasket) {
+            if (!books.containsKey(id)) {
+                throw new InvalidBasketException("Your basket contains invalid books");
+            }
+        }
+
         if (shoppingBasket.length == 0) {
             throw new EmptyBasketException("The basket is empty");
         }
