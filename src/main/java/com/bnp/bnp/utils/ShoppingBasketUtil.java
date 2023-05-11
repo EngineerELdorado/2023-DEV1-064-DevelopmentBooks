@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class BookUtil {
+public class ShoppingBasketUtil {
 
-    private BookUtil() {
+    private ShoppingBasketUtil() {
 
     }
 

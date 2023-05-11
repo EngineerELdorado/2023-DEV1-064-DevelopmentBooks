@@ -4,7 +4,7 @@ import com.bnp.bnp.exceptions.EmptyBasketException;
 import com.bnp.bnp.exceptions.InvalidBasketException;
 import com.bnp.bnp.exceptions.NoBasketException;
 import com.bnp.bnp.repositories.BookRepository;
-import com.bnp.bnp.utils.BookUtil;
+import com.bnp.bnp.utils.ShoppingBasketUtil;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,17 +30,16 @@ public class PricingService {
             return price;
         }
 
-        Set<Integer> distinctBooks = BookUtil.getDistinctBooks(shoppingBasket);
+        Set<Integer> distinctBooks = ShoppingBasketUtil.getDistinctBooks(shoppingBasket);
         int numberOfDistinctBooks = distinctBooks.size();
 
         if (numberOfDistinctBooks == 1) {
             return price;
         }
 
-        Map<Integer, Integer> bookCounts = BookUtil.getBookCounts(shoppingBasket);
+        Map<Integer, Integer> bookCounts = ShoppingBasketUtil.getBookCounts(shoppingBasket);
         double discountAmountForDistinctBooks = 0;
 
-        //As long as we have more than one distinct book we need to apply discount again for them
         while (numberOfDistinctBooks > 1) {
             double discountPercentage = discountPercentages.getOrDefault(numberOfDistinctBooks, 0.0);
             int minCountThatQualifiesForDiscount = Integer.MAX_VALUE;

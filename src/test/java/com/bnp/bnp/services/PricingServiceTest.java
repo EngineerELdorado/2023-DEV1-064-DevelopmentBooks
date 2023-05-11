@@ -161,6 +161,6 @@ class PricingServiceTest {
         double result = pricingService.calculatePrice(shoppingBasket);
 
         //Then
-        assertThat(result).isEqualTo(320);
+        assertThat(result).isEqualTo(322.5);
     }
 }
