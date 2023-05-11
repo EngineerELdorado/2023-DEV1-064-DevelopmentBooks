@@ -81,7 +81,7 @@ class PricingServiceTest {
     }
 
     @Test
-    void given_two_sets_in_a_series_of_four_books_then_return_appropriate_discount() {
+    void given_two_sets_in_a_series_of_four_books_then_apply_discount_for_each_pair_of_distinct_books() {
         //Given
         int[] shoppingBasket = {1, 1, 2, 2};
         given(bookRepository.getBooks()).willReturn(TestData.getBooks());
@@ -151,7 +151,7 @@ class PricingServiceTest {
     }
 
     @Test
-    void given_basket_has_four_books_of_which_3_are_distinct_then_apply_appropriate_discount() {
+    void given_basket_has_four_books_of_which_3_are_distinct_then_apply_discount_for_3_but_not_the_fourth() {
         //Given
         int[] shoppingBasket = {1, 2, 3, 3};
         given(bookRepository.getBooks()).willReturn(TestData.getBooks());
@@ -165,7 +165,7 @@ class PricingServiceTest {
     }
 
     @Test
-    void given_final_example_from_the_assignment_apply_appropriate_discount() {
+    void given_final_example_from_the_assignment_apply_appropriately() {
         //Given
         int[] shoppingBasket = {1, 1, 2, 2, 3, 3, 4, 5};
         given(bookRepository.getBooks()).willReturn(TestData.getBooks());
