@@ -1,10 +1,10 @@
-package com.bnp.bnp.discount.services;
+package com.bnp.bnp.services;
 
-import com.bnp.bnp.basket.exceptions.EmptyBasketException;
-import com.bnp.bnp.basket.exceptions.InvalidBasketException;
-import com.bnp.bnp.basket.exceptions.NoBasketException;
-import com.bnp.bnp.books.repositories.BookRepository;
-import com.bnp.bnp.books.repositories.utils.BookUtil;
+import com.bnp.bnp.exceptions.EmptyBasketException;
+import com.bnp.bnp.exceptions.InvalidBasketException;
+import com.bnp.bnp.exceptions.NoBasketException;
+import com.bnp.bnp.repositories.BookRepository;
+import com.bnp.bnp.utils.BookUtil;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.bnp.bnp.books.repositories.utils;
+package com.bnp.bnp.utils;
 
 import java.util.HashMap;
 import java.util.HashSet;

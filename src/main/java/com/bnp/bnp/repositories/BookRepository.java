@@ -1,4 +1,4 @@
-package com.bnp.bnp.books.repositories;
+package com.bnp.bnp.repositories;
 
 import org.springframework.stereotype.Repository;
 

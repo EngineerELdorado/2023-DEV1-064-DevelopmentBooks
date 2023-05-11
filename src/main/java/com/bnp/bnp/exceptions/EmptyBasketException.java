@@ -1,4 +1,4 @@
-package com.bnp.bnp.basket.exceptions;
+package com.bnp.bnp.exceptions;
 
 public class EmptyBasketException extends RuntimeException {
 
