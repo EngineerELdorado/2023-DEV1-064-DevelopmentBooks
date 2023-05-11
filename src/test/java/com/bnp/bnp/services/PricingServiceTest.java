@@ -3,8 +3,8 @@ package com.bnp.bnp.services;
 import com.bnp.bnp.exceptions.EmptyBasketException;
 import com.bnp.bnp.exceptions.InvalidBasketException;
 import com.bnp.bnp.exceptions.NoBasketException;
-import com.bnp.bnp.repositories.BookRepository;
 import com.bnp.bnp.models.TestData;
+import com.bnp.bnp.repositories.BookRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -161,6 +161,10 @@ class PricingServiceTest {
         double result = pricingService.calculatePrice(shoppingBasket);
 
         //Then
+        /* (the example given in the assignment says this should return 320).
+        However, it is returning a different value (322.5). We can discuss about this in the code review.
+        It looks to me like the assignment description contains a mistake. Or if am wrong please correct me.
+         */
         assertThat(result).isEqualTo(322.5);
     }
 }
