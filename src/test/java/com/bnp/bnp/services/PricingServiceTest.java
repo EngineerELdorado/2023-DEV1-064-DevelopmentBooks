@@ -3,8 +3,8 @@ package com.bnp.bnp.services;
 import com.bnp.bnp.exceptions.EmptyBasketException;
 import com.bnp.bnp.exceptions.InvalidBasketException;
 import com.bnp.bnp.exceptions.NoBasketException;
-import com.bnp.bnp.repositories.BookRepository;
 import com.bnp.bnp.models.TestData;
+import com.bnp.bnp.repositories.BookRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -78,6 +78,20 @@ class PricingServiceTest {
         assertThatThrownBy(() -> pricingService.calculatePrice(shoppingBasket))
                 .isInstanceOf(InvalidBasketException.class)
                 .hasMessage("Your basket contains invalid books");
+    }
+
+    @Test
+    void given_two_sets_in_a_series_of_four_books_then_return_appropriate_discount() {
+        //Given
+        int[] shoppingBasket = {1, 1, 2, 2};
+        given(bookRepository.getBooks()).willReturn(TestData.getBooks());
+        given(bookRepository.getDiscountsRates()).willReturn(TestData.getDiscountsRates());
+
+        //When
+        double result = pricingService.calculatePrice(shoppingBasket);
+
+        //Then
+        assertThat(result).isEqualTo(190);
     }
 
     @Test
