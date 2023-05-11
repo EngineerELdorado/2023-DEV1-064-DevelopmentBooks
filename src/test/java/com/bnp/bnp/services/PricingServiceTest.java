@@ -161,6 +161,11 @@ class PricingServiceTest {
         double result = pricingService.calculatePrice(shoppingBasket);
 
         //Then
+
+        /* (the example given in the assignment says this should return 320).
+        However, it is returning a different value (322.5). We can discuss about this in the code review.
+        It looks to me like the assignment description contains a mistake. Or if am wrong please correct me.
+         */
         assertThat(result).isEqualTo(322.5);
     }
 }
